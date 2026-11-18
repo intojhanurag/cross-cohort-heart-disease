@@ -1,0 +1,79 @@
+
+=== Table 2. Cohort composition ===
+                records  disease  prevalence_pct  median_age  female_n  female_pct
+cohort                                                                           
+Cleveland          303      139            45.9        56.0        97        32.0
+Hungary            294      106            36.1        49.0        81        27.6
+Switzerland        123      115            93.5        56.0        10         8.1
+Long Beach VA      200      149            74.5        60.0         6         3.0
+
+=== Figure 1 data. Missing values per predictor (%) ===
+                age  sex   cp  trestbps  chol   fbs  restecg  thalach  exang  oldpeak  slope    ca  thal
+cohort                                                                                                 
+Cleveland      0.0  0.0  0.0       0.0   0.0   0.0      0.0      0.0    0.0      0.0    0.0   1.3   0.7
+Hungary        0.0  0.0  0.0       0.3   7.8   2.7      0.3      0.3    0.3      0.0   64.6  99.0  90.5
+Switzerland    0.0  0.0  0.0       1.6   0.0  61.0      0.8      0.8    0.8      4.9   13.8  95.9  42.3
+Long Beach VA  0.0  0.0  0.0      28.0   3.5   3.5      0.0     26.5   26.5     28.0   51.0  99.0  83.0
+
+[  0.2s] Full logistic: 10x repeated 5-fold CV on Cleveland ...
+
+[  2.0s] Portable logistic: 10x repeated 5-fold CV on Cleveland ...
+
+[  3.8s] Full RF: 10x repeated 5-fold CV on Cleveland ...
+
+[ 38.8s] Portable RF: 10x repeated 5-fold CV on Cleveland ...
+
+=== Table 3. Repeated cross-validation performance in Cleveland ===
+                      auc  auc_lo  auc_hi  brier  sensitivity  specificity  cal_intercept  cal_slope
+model                                                                                              
+Full logistic      0.913   0.878   0.944  0.114        0.806        0.902         -0.039      0.935
+Portable logistic  0.875   0.835   0.913  0.143        0.755        0.841         -0.046      0.972
+Full RF            0.908   0.872   0.940  0.125        0.791        0.872          0.101      1.579
+Portable RF        0.867   0.826   0.905  0.151        0.719        0.841          0.065      1.508
+
+=== Table 4. External performance (frozen models, no refitting) ===
+                                      n    auc  auc_lo  auc_hi  brier  sensitivity  specificity  cal_intercept  cal_slope
+model             cohort                                                                                                
+Full logistic     Hungary          294  0.886   0.843   0.926  0.130        0.613        0.941          0.675      1.004
+                  Switzerland      123  0.746   0.510   0.913  0.407        0.400        0.875          3.435      0.556
+                  Long Beach VA    200  0.685   0.606   0.767  0.334        0.450        0.843          1.469      0.392
+                  External pooled  617  0.812   0.778   0.845  0.251        0.481        0.919          1.392      0.732
+Portable logistic Hungary          294  0.877   0.832   0.919  0.135        0.783        0.814         -0.551      0.909
+                  Switzerland      123  0.766   0.620   0.899  0.267        0.609        0.625          2.968      0.585
+                  Long Beach VA    200  0.722   0.642   0.797  0.188        0.785        0.529          0.664      0.488
+                  External pooled  617  0.815   0.780   0.848  0.179        0.730        0.749          0.405      0.702
+Full RF           Hungary          294  0.896   0.853   0.933  0.146        0.453        0.979          1.443      1.835
+                  Switzerland      123  0.761   0.552   0.950  0.311        0.426        0.750          3.623      1.369
+                  Long Beach VA    200  0.735   0.650   0.813  0.300        0.409        0.882          1.772      0.945
+                  External pooled  617  0.867   0.838   0.896  0.229        0.427        0.951          2.048      1.633
+Portable RF       Hungary          294  0.890   0.848   0.929  0.132        0.717        0.894         -0.272      1.482
+                  Switzerland      123  0.767   0.522   0.983  0.198        0.626        0.625          2.799      1.563
+                  Long Beach VA    200  0.750   0.671   0.823  0.186        0.779        0.549          0.819      0.905
+                  External pooled  617  0.856   0.824   0.887  0.162        0.714        0.814          0.587      1.413
+
+=== Table 5. Sex-stratified performance, portable logistic (exploratory) ===
+                             n  disease    auc  auc_lo  auc_hi  sensitivity  specificity
+evaluation      subgroup                                                               
+Cleveland       Female     97       25  0.891   0.801   0.962        0.720        0.931
+                Male      206      114  0.846   0.791   0.895        0.763        0.772
+External pooled Female     97       25  0.754   0.627   0.864        0.400        0.917
+                Male      520      345  0.791   0.750   0.831        0.754        0.680
+
+=== Figure 4 data. Portable logistic coefficients (standardized log-odds) ===
+ sex_1.0        1.530
+cp_4.0         1.003
+oldpeak        0.722
+exang_1.0      0.697
+trestbps       0.277
+chol           0.224
+age            0.170
+fbs_1.0        0.008
+restecg_1.0   -0.075
+restecg_2.0   -0.291
+cp_2.0        -0.365
+thalach       -0.536
+restecg_0.0   -0.690
+cp_3.0        -0.795
+cp_1.0        -0.899
+
+Done in 74.3s. Tables, figures, models and report.html are in /home/user/lung-disease-prediction-vgg16/heart-disease-cross-cohort/outputs

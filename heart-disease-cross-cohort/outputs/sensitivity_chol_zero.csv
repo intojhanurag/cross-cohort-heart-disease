@@ -1,0 +1,9 @@
+cholesterol,cohort,auc,brier,sensitivity,specificity,cal_intercept,cal_slope
+zeros kept (main analysis),Hungary,0.877,0.135,0.783,0.814,-0.551,0.909
+zeros kept (main analysis),Switzerland,0.766,0.267,0.609,0.625,2.968,0.585
+zeros kept (main analysis),Long Beach VA,0.722,0.188,0.785,0.529,0.664,0.488
+zeros kept (main analysis),External pooled,0.815,0.179,0.73,0.749,0.405,0.702
+zeros treated as missing,Hungary,0.877,0.135,0.783,0.814,-0.551,0.909
+zeros treated as missing,Switzerland,0.766,0.155,0.783,0.5,2.359,0.585
+zeros treated as missing,Long Beach VA,0.727,0.173,0.859,0.471,0.482,0.54
+zeros treated as missing,External pooled,0.853,0.152,0.814,0.733,0.171,0.827

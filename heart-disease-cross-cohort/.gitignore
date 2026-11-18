@@ -1,0 +1,4 @@
+# The parent repository ignores data/ (X-ray images). The UCI files here are small and must be tracked.
+!data/
+__pycache__/
+outputs/models/

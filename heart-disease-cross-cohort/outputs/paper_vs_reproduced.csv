@@ -1,0 +1,122 @@
+item,metric,paper,reproduced,diff,status
+T2 Cleveland,records,303.0,303.0,0.0,MATCH
+T2 Cleveland,disease,139.0,139.0,0.0,MATCH
+T2 Cleveland,prevalence %,45.9,45.9,0.0,MATCH
+T2 Cleveland,median age,56.0,56.0,0.0,MATCH
+T2 Cleveland,female n,97.0,97.0,0.0,MATCH
+T2 Hungary,records,294.0,294.0,0.0,MATCH
+T2 Hungary,disease,106.0,106.0,0.0,MATCH
+T2 Hungary,prevalence %,36.1,36.1,0.0,MATCH
+T2 Hungary,median age,49.0,49.0,0.0,MATCH
+T2 Hungary,female n,81.0,81.0,0.0,MATCH
+T2 Switzerland,records,123.0,123.0,0.0,MATCH
+T2 Switzerland,disease,115.0,115.0,0.0,MATCH
+T2 Switzerland,prevalence %,93.5,93.5,0.0,MATCH
+T2 Switzerland,median age,56.0,56.0,0.0,MATCH
+T2 Switzerland,female n,10.0,10.0,0.0,MATCH
+T2 Long Beach VA,records,200.0,200.0,0.0,MATCH
+T2 Long Beach VA,disease,149.0,149.0,0.0,MATCH
+T2 Long Beach VA,prevalence %,74.5,74.5,0.0,MATCH
+T2 Long Beach VA,median age,60.0,60.0,0.0,MATCH
+T2 Long Beach VA,female n,6.0,6.0,0.0,MATCH
+T3 Full logistic,AUC,0.913,0.913,0.0,MATCH
+T3 Full logistic,AUC CI low,0.878,0.878,0.0,ok (bootstrap)
+T3 Full logistic,AUC CI high,0.944,0.944,0.0,ok (bootstrap)
+T3 Full logistic,Brier,0.114,0.114,0.0,MATCH
+T3 Full logistic,Sensitivity,0.806,0.806,-0.0,MATCH
+T3 Full logistic,Specificity,0.902,0.902,0.0,MATCH
+T3 Full logistic,Cal. slope,0.935,0.935,-0.0,MATCH
+T3 Portable logistic,AUC,0.875,0.875,-0.0,MATCH
+T3 Portable logistic,AUC CI low,0.834,0.835,0.001,ok (bootstrap)
+T3 Portable logistic,AUC CI high,0.911,0.913,0.002,ok (bootstrap)
+T3 Portable logistic,Brier,0.143,0.143,-0.0,MATCH
+T3 Portable logistic,Sensitivity,0.755,0.755,0.0,MATCH
+T3 Portable logistic,Specificity,0.841,0.841,0.0,MATCH
+T3 Portable logistic,Cal. slope,0.972,0.972,-0.0,MATCH
+T3 Portable logistic,Cal. intercept,-0.046,-0.046,0.0,MATCH
+T3 Full RF,AUC,0.908,0.908,0.0,MATCH
+T3 Full RF,AUC CI low,0.875,0.872,-0.003,ok (bootstrap)
+T3 Full RF,AUC CI high,0.938,0.94,0.002,ok (bootstrap)
+T3 Full RF,Brier,0.125,0.125,0.0,MATCH
+T3 Full RF,Sensitivity,0.791,0.791,0.0,MATCH
+T3 Full RF,Specificity,0.872,0.872,-0.0,MATCH
+T3 Full RF,Cal. slope,1.579,1.579,-0.0,MATCH
+T3 Portable RF,AUC,0.867,0.867,-0.0,MATCH
+T3 Portable RF,AUC CI low,0.824,0.826,0.002,ok (bootstrap)
+T3 Portable RF,AUC CI high,0.905,0.905,-0.0,ok (bootstrap)
+T3 Portable RF,Brier,0.151,0.151,0.0,MATCH
+T3 Portable RF,Sensitivity,0.719,0.719,0.0,MATCH
+T3 Portable RF,Specificity,0.841,0.841,0.0,MATCH
+T3 Portable RF,Cal. slope,1.507,1.508,0.001,MATCH
+T4 Logistic Hungary,AUC,0.877,0.877,0.0,MATCH
+T4 Logistic Hungary,AUC CI low,0.833,0.832,-0.001,ok (bootstrap)
+T4 Logistic Hungary,AUC CI high,0.918,0.919,0.001,ok (bootstrap)
+T4 Logistic Hungary,Brier,0.135,0.135,0.0,MATCH
+T4 Logistic Hungary,Sensitivity,0.783,0.783,0.0,MATCH
+T4 Logistic Hungary,Specificity,0.814,0.814,-0.0,MATCH
+T4 Logistic Switzerland,AUC,0.766,0.766,0.0,MATCH
+T4 Logistic Switzerland,AUC CI low,0.624,0.62,-0.004,ok (bootstrap)
+T4 Logistic Switzerland,AUC CI high,0.906,0.899,-0.007,ok (bootstrap)
+T4 Logistic Switzerland,Brier,0.267,0.267,0.0,MATCH
+T4 Logistic Switzerland,Sensitivity,0.609,0.609,-0.0,MATCH
+T4 Logistic Switzerland,Specificity,0.625,0.625,0.0,MATCH
+T4 Logistic Switzerland,Cal. intercept,2.968,2.968,0.0,MATCH
+T4 Logistic Long Beach VA,AUC,0.722,0.722,0.0,MATCH
+T4 Logistic Long Beach VA,AUC CI low,0.643,0.642,-0.001,ok (bootstrap)
+T4 Logistic Long Beach VA,AUC CI high,0.799,0.797,-0.002,ok (bootstrap)
+T4 Logistic Long Beach VA,Brier,0.188,0.188,0.0,MATCH
+T4 Logistic Long Beach VA,Sensitivity,0.785,0.785,0.0,MATCH
+T4 Logistic Long Beach VA,Specificity,0.529,0.529,0.0,MATCH
+T4 Logistic Long Beach VA,Cal. slope,0.488,0.488,0.0,MATCH
+T4 RF Hungary,AUC,0.89,0.89,-0.0,MATCH
+T4 RF Hungary,AUC CI low,0.849,0.848,-0.001,ok (bootstrap)
+T4 RF Hungary,AUC CI high,0.929,0.929,0.0,ok (bootstrap)
+T4 RF Hungary,Brier,0.131,0.132,0.001,MATCH
+T4 RF Hungary,Sensitivity,0.717,0.717,-0.0,MATCH
+T4 RF Hungary,Specificity,0.894,0.894,-0.0,MATCH
+T4 RF Switzerland,AUC,0.767,0.767,0.0,MATCH
+T4 RF Switzerland,AUC CI low,0.544,0.522,-0.022,ok (bootstrap)
+T4 RF Switzerland,AUC CI high,0.981,0.983,0.002,ok (bootstrap)
+T4 RF Switzerland,Brier,0.198,0.198,-0.0,MATCH
+T4 RF Switzerland,Sensitivity,0.626,0.626,0.0,MATCH
+T4 RF Switzerland,Specificity,0.625,0.625,0.0,MATCH
+T4 RF Long Beach VA,AUC,0.749,0.75,0.001,MATCH
+T4 RF Long Beach VA,AUC CI low,0.672,0.671,-0.001,ok (bootstrap)
+T4 RF Long Beach VA,AUC CI high,0.822,0.823,0.001,ok (bootstrap)
+T4 RF Long Beach VA,Brier,0.186,0.186,0.0,MATCH
+T4 RF Long Beach VA,Sensitivity,0.779,0.779,-0.0,MATCH
+T4 RF Long Beach VA,Specificity,0.549,0.549,0.0,MATCH
+4.2 Logistic pooled external,AUC,0.815,0.815,-0.0,MATCH
+4.2 Logistic pooled external,AUC CI low,0.782,0.78,-0.002,ok (bootstrap)
+4.2 Logistic pooled external,AUC CI high,0.847,0.848,0.001,ok (bootstrap)
+4.2 Logistic pooled external,Brier,0.179,0.179,-0.0,MATCH
+4.2 Logistic pooled external,Sensitivity,0.73,0.73,-0.0,MATCH
+4.2 Logistic pooled external,Specificity,0.749,0.749,-0.0,MATCH
+T5 Cleveland Female,records,97.0,97.0,0.0,MATCH
+T5 Cleveland Female,disease,25.0,25.0,0.0,MATCH
+T5 Cleveland Female,AUC,0.891,0.891,0.0,MATCH
+T5 Cleveland Female,AUC CI low,0.804,0.801,-0.003,ok (bootstrap)
+T5 Cleveland Female,AUC CI high,0.962,0.962,0.0,ok (bootstrap)
+T5 Cleveland Female,Sensitivity,0.72,0.72,0.0,MATCH
+T5 Cleveland Female,Specificity,0.931,0.931,-0.0,MATCH
+T5 Cleveland Male,records,206.0,206.0,0.0,MATCH
+T5 Cleveland Male,disease,114.0,114.0,0.0,MATCH
+T5 Cleveland Male,AUC,0.846,0.846,0.0,MATCH
+T5 Cleveland Male,AUC CI low,0.79,0.791,0.001,ok (bootstrap)
+T5 Cleveland Male,AUC CI high,0.897,0.895,-0.002,ok (bootstrap)
+T5 Cleveland Male,Sensitivity,0.763,0.763,0.0,MATCH
+T5 Cleveland Male,Specificity,0.772,0.772,-0.0,MATCH
+T5 External pooled Female,records,97.0,97.0,0.0,MATCH
+T5 External pooled Female,disease,25.0,25.0,0.0,MATCH
+T5 External pooled Female,AUC,0.754,0.754,-0.0,MATCH
+T5 External pooled Female,AUC CI low,0.63,0.627,-0.003,ok (bootstrap)
+T5 External pooled Female,AUC CI high,0.866,0.864,-0.002,ok (bootstrap)
+T5 External pooled Female,Sensitivity,0.4,0.4,0.0,MATCH
+T5 External pooled Female,Specificity,0.917,0.917,-0.0,MATCH
+T5 External pooled Male,records,520.0,520.0,0.0,MATCH
+T5 External pooled Male,disease,345.0,345.0,0.0,MATCH
+T5 External pooled Male,AUC,0.791,0.791,0.0,MATCH
+T5 External pooled Male,AUC CI low,0.75,0.75,0.0,ok (bootstrap)
+T5 External pooled Male,AUC CI high,0.829,0.831,0.002,ok (bootstrap)
+T5 External pooled Male,Sensitivity,0.754,0.754,-0.0,MATCH
+T5 External pooled Male,Specificity,0.68,0.68,0.0,MATCH
