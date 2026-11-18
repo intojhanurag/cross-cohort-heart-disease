@@ -1,250 +1,156 @@
----
-title: Lung Disease Prediction
-emoji: 🫁
-colorFrom: blue
-colorTo: red
-sdk: docker
-pinned: false
----
+# Cross-Cohort Heart Disease Detection Using Interpretable and Calibration-Aware Machine Learning
 
-# Lung Disease Prediction Using Machine Learning
+Code, data and results for **Paper ID 473**, 2nd International Conference on Computing,
+Communication and Sustainable Energy Technologies (**I3CSET-2026**), Track 7: Artificial
+Intelligence, Machine Learning & Data Science.
 
-A deep learning-powered web application that analyzes chest X-ray images to predict whether a patient's lungs are **Normal** or show signs of **Pneumonia** — with real-time confidence scoring.
+**Authors:** Kanhaiya Kumar Sahani, Anurag Kumar Ojha, Asad Khan &nbsp;·&nbsp; **Mentor:** Mrs. Shanu Verma
+Department of Information Technology, Galgotias College of Engineering and Technology, Greater Noida
 
-Built using **VGG16 transfer learning** on the Kaggle Chest X-Ray Pneumonia dataset (5,863 images), served through a **Flask** web interface with drag-and-drop image upload.
+> A heart-disease model that scores well in one hospital must be tested externally, and its
+> probabilities checked, before anyone trusts it in another hospital.
 
----
-
-## Demo
-![alt text](<Screenshot 2026-03-11 203410.png>)
-
-| Upload Screen | Normal Result | Pneumonia Result |
-|:---:|:---:|:---:|
-| Drag & drop or browse X-ray | Green card with confidence % | Red alert with confidence % |
+Everything for the study is in [`heart-disease-cross-cohort/`](heart-disease-cross-cohort/).
 
 ---
 
-## Key Features
+## What the study does
 
-- **AI-Powered Diagnosis** — VGG16 deep learning model with ~90% test accuracy
-- **Grad-CAM Heatmap** — Visual explainability showing which lung regions the AI focused on
-- **Real-Time Prediction** — Upload an X-ray and get results in seconds
-- **Confidence Score** — Shows prediction confidence as a percentage with visual bar
-- **Model Performance Dashboard** — View confusion matrix, training curves, and model architecture
-- **Prediction History** — Track and review recent analyses
-- **Drag & Drop Upload** — Modern UI with image preview before analysis
-- **Mobile Responsive** — Works on desktop, tablet, and mobile browsers
-- **Class-Balanced Training** — Handles dataset imbalance using computed class weights
+Most heart-disease classifiers are trained and tested on a random split of the same 303
+Cleveland patients. This study trains on **Cleveland** only and tests the frozen model,
+**without refitting**, on 617 patients from three other hospitals.
 
----
+| Cohort | Role | Records | With disease | Prevalence | Median age | Female |
+|---|---|---|---|---|---|---|
+| Cleveland, USA | Development | 303 | 139 | 45.9% | 56 | 97 (32.0%) |
+| Hungary | External test | 294 | 106 | 36.1% | 49 | 81 (27.6%) |
+| Switzerland | External test | 123 | 115 | 93.5% | 56 | 10 (8.1%) |
+| Long Beach VA, USA | External test | 200 | 149 | 74.5% | 60 | 6 (3.0%) |
 
-## Model Architecture
+- **Models:** L2-regularised logistic regression (main, interpretable) and a random forest
+  (500 trees, depth 5, minimum leaf 5). No oversampling, class weighting or hyperparameter search.
+- **Portable model:** vessel count, thalassemia and ST slope are missing in up to 99% of
+  external records, so they are dropped. Ten routinely collected predictors remain.
+- **Validation:** 10 x repeated stratified 5-fold cross-validation inside Cleveland, with all
+  preprocessing fitted inside each training fold; then one refit on all 303 records, frozen.
+- **Reported:** AUC, average precision, Brier score, sensitivity and specificity at a 0.50
+  cut-off, calibration intercept and slope, 95% confidence intervals from 2,000 bootstrap
+  resamples, and an exploratory comparison by sex.
 
-```
-VGG16 (ImageNet pretrained, frozen) → GlobalAveragePooling2D → Dense(512, ReLU) → Dropout(0.5) → Dense(1, Sigmoid)
-```
+## Results (portable logistic model)
 
-| Metric | Value |
-|--------|-------|
-| Base Model | VGG16 (ImageNet weights) |
-| Total Parameters | 14,977,857 |
-| Trainable Parameters | 263,169 |
-| Input Size | 224 x 224 x 3 (RGB) |
-| Output | Binary (Normal / Pneumonia) |
-| Model Size | ~60 MB |
-| Optimizer | Adam (lr=0.0001) |
-| Loss Function | Binary Crossentropy |
+| Evaluation | Records | AUC (95% CI) | Brier | Sensitivity | Specificity | Cal. intercept | Cal. slope |
+|---|---|---|---|---|---|---|---|
+| Cleveland (internal CV) | 303 | 0.875 (0.835–0.913) | 0.143 | 0.755 | 0.841 | −0.046 | 0.972 |
+| Hungary | 294 | 0.877 (0.832–0.919) | 0.135 | 0.783 | 0.814 | −0.551 | 0.909 |
+| Switzerland | 123 | 0.766 (0.620–0.899) | 0.267 | 0.609 | 0.625 | 2.968 | 0.585 |
+| Long Beach VA | 200 | 0.722 (0.642–0.797) | 0.188 | 0.785 | 0.529 | 0.664 | 0.488 |
+| External pooled | 617 | 0.815 (0.780–0.848) | 0.179 | 0.730 | 0.749 | 0.405 | 0.702 |
 
-### Training Callbacks
-- **EarlyStopping** — patience=5, restores best weights
-- **ReduceLROnPlateau** — halves LR after 3 epochs of no improvement
-- **ModelCheckpoint** — saves best model by validation accuracy
+- Ranking ability transfers only partly: AUC falls from 0.875 in Cleveland to 0.722–0.877 outside it.
+- Calibration does not transfer: risk is strongly under-predicted in the 93.5%-prevalence Swiss cohort.
+- Dropping the three poorly available tests costs 0.038 internal AUC (0.913 to 0.875).
+- External sensitivity was 0.400 in women and 0.754 in men. Only 25 external women had
+  disease, so this is a warning to test further, not proof of bias.
 
----
+| ROC curves | Calibration curves |
+|:---:|:---:|
+| ![ROC curves by cohort](heart-disease-cross-cohort/outputs/figures/fig2_roc_portable_logistic.png) | ![Calibration curves by cohort](heart-disease-cross-cohort/outputs/figures/fig3_calibration_portable_logistic.png) |
 
-## Dataset
+| Predictor missingness | Logistic coefficients |
+|:---:|:---:|
+| ![Missingness by cohort](heart-disease-cross-cohort/outputs/figures/fig1_missingness.png) | ![Standardized coefficients](heart-disease-cross-cohort/outputs/figures/fig4_coefficients_portable_logistic.png) |
 
-**Source:** [Kaggle — Chest X-Ray Images (Pneumonia)](https://www.kaggle.com/datasets/paultimothymooney/chest-xray-pneumonia) by Paul Mooney
+All four models, every confidence interval and the sex-stratified table are in
+[`heart-disease-cross-cohort/outputs/`](heart-disease-cross-cohort/outputs/).
 
-| Split | Normal | Pneumonia | Total |
-|-------|--------|-----------|-------|
-| Train | 1,341 | 3,875 | 5,216 |
-| Test | 234 | 390 | 624 |
-
-- Images: JPEG chest X-rays, varying sizes, resized to 224x224
-- Validation: 15% split from training data (not the default 16-image val folder)
-- Class imbalance handled with `sklearn.utils.class_weight.compute_class_weight`
-
-### Data Augmentation (Training Only)
-| Parameter | Value |
-|-----------|-------|
-| Rotation | 20° |
-| Width/Height Shift | 10% |
-| Shear | 10% |
-| Zoom | 15% |
-| Horizontal Flip | Yes |
-| Rescaling | 1/255 |
-
----
-
-## Project Structure
-
-```
-├── app.py                  # Flask web application
-├── train.py                # Model training script
-├── predict.py              # Prediction utility function
-├── gradcam.py              # Grad-CAM heatmap generation
-├── config.py               # Hyperparameters and paths
-├── requirements.txt        # Python dependencies
-├── Dockerfile              # Hugging Face Spaces deployment
-├── Procfile                # Gunicorn config
-├── render.yaml             # Render config (backup)
-├── model/
-│   └── vgg16_pneumonia.keras   # Trained model (60 MB)
-├── static/
-│   ├── css/style.css           # Styling
-│   ├── js/main.js              # Drag-drop, preview, validation
-│   ├── uploads/                # Temporary upload directory
-│   ├── confusion_matrix.png    # Evaluation visualization
-│   └── training_history.png    # Accuracy/loss curves
-├── templates/
-│   ├── index.html              # Upload page
-│   ├── result.html             # Prediction result + Grad-CAM page
-│   ├── performance.html        # Model performance dashboard
-│   ├── history.html            # Prediction history page
-│   └── about.html              # Project info page
-├── notebooks/
-│   └── training.ipynb          # Google Colab training notebook
-└── data/                       # Dataset directory (not in repo)
-```
-
----
-
-## Tech Stack
-
-| Component | Technology |
-|-----------|-----------|
-| Deep Learning | TensorFlow / Keras |
-| Model | VGG16 (Transfer Learning) |
-| Image Processing | OpenCV |
-| Web Framework | Flask |
-| Frontend | HTML, CSS, JavaScript (vanilla) |
-| Deployment | Hugging Face Spaces (Docker) / Gunicorn |
-| Training Platform | Google Colab (GPU) |
-
----
-
-## Getting Started
-
-### Prerequisites
-- Python 3.10+ (tested with 3.12)
-- pip
-
-### Installation
+## Run it
 
 ```bash
-# Clone the repository
 git clone https://github.com/intojhanurag/lung-disease-prediction-vgg16.git
-cd lung-disease-prediction-vgg16
+```
 
-# Create virtual environment
-python3 -m venv venv
-source venv/bin/activate        # Linux/Mac
-# venv\Scripts\activate         # Windows
+```bash
+cd lung-disease-prediction-vgg16/heart-disease-cross-cohort
+```
 
-# Install dependencies
+```bash
 pip install -r requirements.txt
 ```
 
-### Run Locally
-
 ```bash
-python app.py
+python run_analysis.py
 ```
 
-Open **http://localhost:5000** in your browser.
+```bash
+python verify_paper_numbers.py
+```
 
-### Train the Model (Optional)
+```bash
+streamlit run app.py
+```
 
-Training is done on **Google Colab** for free GPU access:
+| Command | What it does |
+|---|---|
+| `python run_analysis.py` | Rebuilds every table and figure from the raw data (about 75 seconds on 4 cores) |
+| `python verify_paper_numbers.py` | Compares 121 values printed in the paper with the run you just made |
+| `streamlit run app.py` | Dashboard with the data, results, coefficients and single-patient scoring |
+| `python sensitivity_chol_zero.py` | Sensitivity check for zero-coded cholesterol |
 
-1. Open [Google Colab](https://colab.research.google.com)
-2. Upload `notebooks/training.ipynb`
-3. Set **Runtime → Change runtime type → GPU (T4)**
-4. Click **Runtime → Run all**
-5. Wait ~15-20 minutes
-6. Download the generated `vgg16_pneumonia.keras` → place in `model/`
-7. Download `confusion_matrix.png` and `training_history.png` → place in `static/`
+No Python at hand? Download
+[`outputs/report.html`](heart-disease-cross-cohort/outputs/report.html) and open it in a
+browser: one self-contained page with all tables and figures.
 
----
+## Data
 
-## API Routes
+The four processed files of the UCI Heart Disease repository are included unmodified in
+[`heart-disease-cross-cohort/data/raw/`](heart-disease-cross-cohort/data/raw/), with SHA-256
+hashes. Each has 14 comma-separated columns and `?` for missing values:
 
-| Route | Method | Description |
-|-------|--------|-------------|
-| `/` | GET | Upload page — drag & drop or browse for X-ray image |
-| `/predict` | POST | Accepts image, runs model inference, returns result with Grad-CAM |
-| `/history` | GET | View recent prediction history |
-| `/history/clear` | POST | Clear prediction history |
-| `/performance` | GET | Model performance dashboard with metrics and plots |
-| `/about` | GET | Project information and team details |
+`age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpeak, slope, ca, thal, num`
 
----
+| File | Cohort | Records |
+|---|---|---|
+| `processed.cleveland.data` | Cleveland Clinic Foundation, USA | 303 |
+| `processed.hungarian.data` | Hungarian Institute of Cardiology, Budapest | 294 |
+| `processed.switzerland.data` | University Hospitals Zurich and Basel | 123 |
+| `processed.va.data` | V.A. Medical Center, Long Beach, USA | 200 |
 
-## Evaluation Results
+Source: Janosi A, Steinbrunn W, Pfisterer M, Detrano R. *Heart Disease.* UCI Machine Learning
+Repository, 1989. doi:10.24432/C52P4X (CC BY 4.0).
 
-After training on Google Colab with GPU (T4):
+## Repository layout
 
-- **Test Accuracy:** ~88–92%
-- **Validation Accuracy:** ~90–93%
+```
+heart-disease-cross-cohort/     the I3CSET-2026 study
+├── data/raw/                   four UCI cohort files + SHA256SUMS
+├── run_analysis.py             the whole analysis
+├── verify_paper_numbers.py     paper values vs. reproduced values
+├── sensitivity_chol_zero.py    zero-cholesterol sensitivity check
+├── build_report.py             builds outputs/report.html
+├── app.py                      Streamlit dashboard
+├── requirements.txt
+└── outputs/                    tables (CSV, XLSX), figures, per-patient predictions,
+                                run manifest (seed, versions, data hashes), report.html
 
-Detailed metrics (precision, recall, F1-score) and visualizations are generated during training:
-- `static/confusion_matrix.png` — True vs Predicted label counts
-- `static/training_history.png` — Accuracy and loss curves across epochs
+app.py, train.py, model/, ...   earlier project: pneumonia detection from chest X-rays
+```
 
----
+## Limitations
 
-## Live Demo
+- The data are from about 1988 and from patients already referred for angiography, so this
+  is not a population screening tool.
+- Only 303 development records; Switzerland has only 8 disease-free patients.
+- Cholesterol is recorded as 0 for all 123 Switzerland records and 49 of 200 Long Beach VA
+  records. The main analysis keeps the UCI values unchanged. Treating them as missing leaves
+  per-site AUC almost unchanged but improves Switzerland's Brier score from 0.267 to 0.155
+  and raises the pooled external AUC from 0.815 to 0.853.
+- The sex comparison is exploratory and underpowered. No ethnicity or socioeconomic data.
 
-**Try it now:** [https://huggingface.co/spaces/anurag2004/lung-disease-prediction](https://huggingface.co/spaces/anurag2004/lung-disease-prediction)
+**This is a research prototype. No model here is suitable for clinical use.**
 
----
+## Earlier project in this repository
 
-## Deployment
-
-Deployed on **Hugging Face Spaces** using Docker (16GB RAM, free tier).
-
-Render.com was attempted first but its free tier (512MB RAM) was insufficient for TensorFlow + VGG16 inference.
-
-### To deploy your own:
-1. Fork this repository
-2. Create a new Space on [Hugging Face](https://huggingface.co/new-space) with **Docker SDK**
-3. Push the code to the Space
-4. It builds and deploys automatically
-
----
-
-## Team
-
-| Name | Roll Number |
-|------|-------------|
-| Kanhaiya Kumar Sahani | 2300970130067|
-| Anurag Kumar Ojha | 2300970130027|
-| Asad Khan | 2300970130033|
-
-**Guide:** Mrs. Shanu Verma
-**College:** Galgotias College of Engineering & Technology
-**Department:** Information Technology
-**Subject:** BIT-753 (Major Project)
-
----
-
-## Disclaimer
-
-This application is developed for **educational and academic purposes only**. It is not intended to be used as a substitute for professional medical diagnosis, advice, or treatment. Always consult a qualified healthcare provider for medical decisions.
-
----
-
-## License
-
-This project is developed as part of an academic curriculum and is intended for educational use.
+The repository also holds the team's earlier major project, a VGG16 transfer-learning app
+that classifies chest X-rays as normal or pneumonia (Flask, Grad-CAM). Its files remain at
+the repository root and its documentation is in [`LUNG_XRAY_APP.md`](LUNG_XRAY_APP.md).
