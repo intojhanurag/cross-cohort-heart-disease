@@ -7,7 +7,8 @@ Intelligence, Machine Learning & Data Science.
 **Authors:** Kanhaiya Kumar Sahani, Anurag Kumar Ojha, Asad Khan &nbsp;·&nbsp; **Mentor:** Mrs. Shanu Verma
 Department of Information Technology, Galgotias College of Engineering and Technology, Greater Noida
 
-**Frozen model on Hugging Face:** [anurag2004/cross-cohort-heart-disease](https://huggingface.co/anurag2004/cross-cohort-heart-disease)
+**Live results and risk calculator:** [huggingface.co/spaces/anurag2004/cross-cohort-heart-disease](https://huggingface.co/spaces/anurag2004/cross-cohort-heart-disease)
+**Frozen models:** [huggingface.co/anurag2004/cross-cohort-heart-disease](https://huggingface.co/anurag2004/cross-cohort-heart-disease)
 
 > A heart-disease model that scores well in one hospital must be tested externally, and its
 > probabilities checked, before anyone trusts it in another hospital.
