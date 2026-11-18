@@ -8,6 +8,7 @@ Intelligence, Machine Learning & Data Science.
 Department of Information Technology, Galgotias College of Engineering and Technology, Greater Noida
 
 **Live results and risk calculator:** [huggingface.co/spaces/anurag2004/cross-cohort-heart-disease](https://huggingface.co/spaces/anurag2004/cross-cohort-heart-disease)
+
 **Frozen models:** [huggingface.co/anurag2004/cross-cohort-heart-disease](https://huggingface.co/anurag2004/cross-cohort-heart-disease)
 
 > A heart-disease model that scores well in one hospital must be tested externally, and its
