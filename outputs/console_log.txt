@@ -76,4 +76,4 @@ restecg_0.0   -0.690
 cp_3.0        -0.795
 cp_1.0        -0.899
 
-Done in 74.3s. Tables, figures, models and report.html are in /home/user/lung-disease-prediction-vgg16/heart-disease-cross-cohort/outputs
+Done in 74.3s. Tables, figures, models and report.html are in outputs/

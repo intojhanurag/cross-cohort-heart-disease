@@ -1,2 +1,0 @@
-# Keep figures as normal files (the parent repository sends *.png to Git LFS).
-*.png !filter !diff !merge !text

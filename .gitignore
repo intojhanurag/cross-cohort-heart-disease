@@ -1,9 +1,4 @@
-data/
-model/*.h5
-static/uploads/*
 __pycache__/
 *.pyc
-.env
-venv/
-*.zip
-*:Zone.Identifier
+.venv/
+outputs/models/
